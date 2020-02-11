@@ -87,6 +87,7 @@ import org.eclipse.smarthome.core.thing.type.ThingTypeRegistry;
 import org.eclipse.smarthome.core.thing.util.ThingHandlerHelper;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.State;
+import org.eclipse.smarthome.core.types.UnDefType;
 import org.eclipse.smarthome.core.util.BundleResolver;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -194,6 +195,14 @@ public class ThingManagerImpl
 
             // update thing status and send event about new status
             setThingStatus(thing, statusInfo);
+
+            // Set all channels to Undefined state if the thing changes to OFFLINE
+            if (oldStatusInfo.getStatus().equals(ThingStatus.ONLINE)
+                    && statusInfo.getStatus().equals(ThingStatus.OFFLINE)) {
+                for (Channel channel : thing.getChannels()) {
+                    communicationManager.stateUpdated(channel.getUID(), UnDefType.UNDEF);
+                }
+            }
 
             // if thing is a bridge
             if (isBridge(thing)) {

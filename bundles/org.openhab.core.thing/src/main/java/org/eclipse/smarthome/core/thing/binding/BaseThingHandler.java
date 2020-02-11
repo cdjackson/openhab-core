@@ -233,8 +233,7 @@ public abstract class BaseThingHandler implements ThingHandler {
     }
 
     /**
-     *
-     * Updates the state of the thing.
+     * Updates the state of a channel.
      *
      * @param channelUID unique id of the channel, which was updated
      * @param state new state
@@ -252,8 +251,7 @@ public abstract class BaseThingHandler implements ThingHandler {
     }
 
     /**
-     *
-     * Updates the state of the thing. Will use the thing UID to infer the
+     * Updates the state of a channel. Will use the thing UID to infer the
      * unique channel UID from the given ID.
      *
      * @param channel ID id of the channel, which was updated
